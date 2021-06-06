@@ -33,6 +33,7 @@ function vypis2serial (hlaska: string, uroven: number) {
 let HOD_m_b = 0
 let HOD_prenos = 0
 let HOD_s_b = 0
+let HOD_mili_b = 0
 let TED_milis = 0
 let a_nazvy_upozorneni: string[] = []
 let a_budik_y: number[][] = []
@@ -55,8 +56,10 @@ vypis2serial("po nastav hodiny", 1)
 vypis2serial("Cas: " + ("" + HOD_hod + ":" + HOD_min + ":" + HOD_sec), 1)
 vypis2serial("Datum: " + kitronik_RTC.readDate(), 1)
 basic.forever(function () {
-    basic.pause(100)
     mam_zvonit()
+})
+basic.forever(function () {
+    basic.pause(1150)
     if (pred_milis + 1000 < control.millis()) {
         TED_milis = control.millis()
         vypis2serial("" + "___\ndist_milis: " + (TED_milis - pred_milis), 1)
@@ -69,7 +72,8 @@ basic.forever(function () {
         HOD_hod = (HOD_prenos + HOD_hod) % 24
         HOD_sec = HOD_s_b
         HOD_min = HOD_m_b
-        pred_milis = TED_milis
+        HOD_mili_b = (TED_milis - pred_milis) % 1000
+        pred_milis = TED_milis - HOD_mili_b
         vypis2serial("Cas: " + ("" + HOD_hod + ":" + HOD_min + ":" + HOD_sec + "\n____"), 1)
     }
 })
