@@ -35,6 +35,7 @@ function mam_zvonit () {
                     }
                     while (!(input.buttonIsPressed(Button.AB))) {
                         basic.showString("" + (a_nazvy_upozorneni[a_akt_budik[3]]))
+                        basic.showString("" + HOD_hod + ":" + HOD_min)
                     }
                 }
             }
@@ -91,6 +92,6 @@ basic.forever(function () {
     vypis2serial("" + convertToText(HOD_hod) + " : " + convertToText(HOD_min) + " : " + convertToText(HOD_sec), 4)
 })
 basic.forever(function () {
-    basic.pause(500)
+    basic.showString("" + HOD_hod + ":" + HOD_min)
     mam_zvonit()
 })
